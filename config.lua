@@ -1,3 +1,41 @@
+
+local function copyTable(tbl)
+    local container = {
+        itens = {}
+    }
+    for k, v in pairs(tbl) do
+        container.itens[k] = v
+    end
+    return container
+end
+
+
+local weapon_items = {
+    ['pecadearma'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+    ['gatilho'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+    ['molas'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+    ['placa-metal'] = 9999999 -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+}
+
+local  munition_items = {
+    ['capsulas'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+    ['polvora'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+}
+
+
+local dismantling_items = {
+    ['placa-metal'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+    ['papel'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+}
+
+local washing_itens = {
+    ['dinheirosujo'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+    ['linha'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+    ['cartaovirgem'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+    ['placa-metal'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+    ['tecido'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+}
+
 Config = {
     images = 'http://localhost/images/', -- URL DAS SUAS IMAGENS
     storeLink = 'seulinkaqui', -- LINK DA SUA LOJA
@@ -1123,111 +1161,36 @@ Config = {
     }, -- FIM DA  CONFIGURACAO
 
 
-
+    
 
     -- CONFIGURACAO DOS ARMAZENS
     Storages = {
-        ---ARMAS
-        ['Mafia'] = {
-            itens = {
-                ['pecadearma'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['gatilho'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['molas'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['placa-metal'] = 9999999 -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-            }
-        },
+        ---Armas
+        ['Mafia'] = copyTable(weapon_items),
 
-        ['Verdes'] = {
-            itens = {
-                ['pecadearma'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['gatilho'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['molas'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['placa-metal'] = 9999999 -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-            }
-        },
+        ['Verdes'] = copyTable(weapon_items),
 
-        ['Cartel'] = {
-            itens = {
-                ['capsulas'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['polvora'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-            }
-        },
-        ['Medelin'] = {
-            itens = {
-                ['capsulas'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['polvora'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-            }
-        },
+        -- Munição
+        ['Cartel'] = copyTable(munition_items),
 
-        ---DROGAS
-        ['Bennys'] = {
-            itens = {
-                ['placa-metal'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['papel'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-            }
-        },
+        ['Medelin'] = copyTable(munition_items),
 
-        ['Franca'] = {
-            itens = {
-                ['placa-metal'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['papel'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-            }
-        },
+        ['Vermelhos'] = copyTable(munition_items),
 
-        ---MUNI
-        ['Vermelhos'] = {
-            itens = {
-                ['adubo'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+        ['Roxos'] = copyTable(munition_items),
 
+        ---Desmanche
+        ['Bennys'] = copyTable(dismantling_items),
 
-            }
-        },
-
-        ---MUNI
-        ['Roxos'] = {
-            itens = {
-                ['acidoc'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-
-            }
-        },
-
+        ['Franca'] = copyTable(dismantling_items),
 
         ---LAVAGEM
-        ['Laranjas'] = {
-            itens = {
-                ['componenteq'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+        ['Laranjas'] = copyTable(washing_itens),
 
-            }
-        },
+        ['Vanilla'] = copyTable(washing_itens),
 
-        ----LAVAGEM
-        ['Vanilla'] = {
-            itens = {
-                ['dinheirosujo'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['alvejante'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['contador'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['linha'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['polvora'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['cartaovirgem'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['pendrive'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['tecido'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-            }
-        },
         
-        ----LAVAGEM
-        ['Bahamas'] = {
-            itens = {
-                ['dinheirosujo'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['alvejante'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['contador'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['linha'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['polvora'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                -- ['cartaovirgem'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                -- ['pendrive'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['tecido'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-                ['placa-metal'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-            }
-        },
+        ['Bahamas'] = copyTable(washing_itens),
 
 
     }, -- final do storages
