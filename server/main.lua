@@ -1,3 +1,4 @@
+
 local Tunnel = module("vrp","lib/Tunnel")
 local Proxy = module("vrp","lib/Proxy")
 vRP = Proxy.getInterface("vRP")
@@ -7,6 +8,13 @@ craftingItem = {}
 
 vRP.prepare('sjr/setItens', 'REPLACE INTO facs_farmsystem(user_id, itens, day) VALUES(@user_id, @itens, @day)')
 vRP.prepare('sjr/getItens', 'SELECT * from facs_farmsystem WHERE user_id = @user_id')
+
+vRP.prepare('sjr/setFarmLogs', [[
+    INSERT INTO facs_farm_logs (user_id, item_name, amount, date)
+    VALUES (@user_id, @item_name, @amount, CURDATE())
+    ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)
+]])
+
 
 src.checkPerm = function(perm)
     local source = source
@@ -42,6 +50,7 @@ src.storageItem = function(data, type, id)
         local query = vRP.query('sjr/getItens', { user_id = user_id })
         local info = Config.Tables[type]
         if not info or not info['locations'] or not info['locations'][id] or not info['locations'][id].requireStorage or not info['locations'][id].requireStorage.name then TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazem, abra e feche e tente novamente.", 5000) return true end
+        
         local datatable = vRP.getSData('Storage:'..info['locations'][id].requireStorage.name)
         local storage = json.decode(datatable) or {}
         if storage[data.name] then
@@ -95,6 +104,7 @@ src.storageItem = function(data, type, id)
     end
     return true
 end
+
 
 
 
@@ -178,23 +188,101 @@ src.producedItem = function(data, type)
     end
 end
 
+-- old function storageAl
+
+-- src.storageItemAll = function(type, id)
+
+
+--     print(">>> CHAMADA: storageItemAll")
+
+--     local source = source
+--     local user_id = vRP.getUserId(source)
+    
+--     if user_id then
+--         local query = vRP.query('sjr/getItens', { user_id = user_id })
+--         local info = Config.Tables[type]
+        
+--         -- Verificações de configuração
+--         if not info or not info['locations'] or not info['locations'][id] or not info['locations'][id].requireStorage or not info['locations'][id].requireStorage.name then
+--             TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazém, abra e feche e tente novamente.", 5000)
+--             return false
+--         end
+        
+--         if not Config.Storages[info['locations'][id].requireStorage.name] or not Config.Storages[info['locations'][id].requireStorage.name].itens then
+--             TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazém, abra e feche e tente novamente.", 5000)
+--             return false
+--         end
+        
+--         local datatable = vRP.getSData('Storage:'..info['locations'][id].requireStorage.name)
+--         local storage = json.decode(datatable) or {}
+--         local depositou = false
+--         local temp = os.date("*t", os.time())
+        
+--         -- Processamento de itens
+--         for k, v in pairs(Config.Storages[info['locations'][id].requireStorage.name].itens) do
+--             local amount = vRP.getInventoryItemAmount(user_id, k)
+--             if amount > 0 and vRP.tryGetInventoryItem(user_id, k, amount, true) then
+--                 if storage[k] then
+--                     storage[k] = parseInt(storage[k]) + amount
+--                 else
+--                     storage[k] = amount
+--                 end
+--                 depositou = true
+                
+--                 -- Atualização dos itens no banco de dados
+--                 if #query > 0 then
+--                     local value = json.decode(query[1].itens)
+--                     if value[k] then
+--                         value[k] = value[k] + amount
+--                     else
+--                         value[k] = amount
+--                     end
+--                     vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
+--                 else
+--                     local value = {}
+--                     value[k] = amount
+--                     vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
+--                 end
+                
+--                 -- Registrar log para cada item depositado com sua quantidade
+--                 local itemName = vRP.getItemName(k)
+--                 vRP.sendLog("https://discord.com/api/webhooks/1195352561356656671/M3KO_6fud2VrgB7JRjhIf9OEXyeDGcOzX0ydtaU4C6bJyTKP8lqBEX5zAgOg_zc5Rjjy", "O ID "..user_id.." depositou o item: "..itemName.." na quantidade de "..amount)
+--             end
+--         end
+        
+--         -- Ações após o depósito
+--         if depositou then
+--             TriggerClientEvent('Notify', source, 'sucesso', "Itens guardados com sucesso.", 5000)
+--             vRP.setSData('Storage:'..info['locations'][id].requireStorage.name, json.encode(storage))
+--             return true
+--         end
+--     end
+    
+--     return false
+-- end
+
+-- ###########################################
+
+
 
 
 src.storageItemAll = function(type, id)
+    print(">>> CHAMADA: storageItemAll")
     local source = source
     local user_id = vRP.getUserId(source)
     
     if user_id then
         local query = vRP.query('sjr/getItens', { user_id = user_id })
         local info = Config.Tables[type]
-        
-        -- Verificações de configuração
-        if not info or not info['locations'] or not info['locations'][id] or not info['locations'][id].requireStorage or not info['locations'][id].requireStorage.name then
+
+        -- Verificações de config
+        if not info or not info['locations'] or not info['locations'][id] or
+           not info['locations'][id].requireStorage or not info['locations'][id].requireStorage.name then
             TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazém, abra e feche e tente novamente.", 5000)
             return false
         end
-        
-        if not Config.Storages[info['locations'][id].requireStorage.name] or not Config.Storages[info['locations'][id].requireStorage.name].itens then
+        if not Config.Storages[info['locations'][id].requireStorage.name] or
+           not Config.Storages[info['locations'][id].requireStorage.name].itens then
             TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazém, abra e feche e tente novamente.", 5000)
             return false
         end
@@ -203,49 +291,67 @@ src.storageItemAll = function(type, id)
         local storage = json.decode(datatable) or {}
         local depositou = false
         local temp = os.date("*t", os.time())
-        
-        -- Processamento de itens
+
         for k, v in pairs(Config.Storages[info['locations'][id].requireStorage.name].itens) do
             local amount = vRP.getInventoryItemAmount(user_id, k)
             if amount > 0 and vRP.tryGetInventoryItem(user_id, k, amount, true) then
-                if storage[k] then
-                    storage[k] = parseInt(storage[k]) + amount
-                else
-                    storage[k] = amount
+                if not storage[k] then
+                    storage[k] = 0
                 end
+                storage[k] = storage[k] + amount
                 depositou = true
                 
-                -- Atualização dos itens no banco de dados
+                -- Atualiza facs_farmsystem (Depósito principal)
                 if #query > 0 then
-                    local value = json.decode(query[1].itens)
+                    local value = json.decode(query[1].itens) or {}
                     if value[k] then
                         value[k] = value[k] + amount
                     else
                         value[k] = amount
                     end
-                    vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
+                    vRP.execute('sjr/setItens', {
+                        user_id = user_id,
+                        itens = json.encode(value),
+                        day = temp.day
+                    })
                 else
                     local value = {}
                     value[k] = amount
-                    vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
+                    vRP.execute('sjr/setItens', {
+                        user_id = user_id,
+                        itens = json.encode(value),
+                        day = temp.day
+                    })
                 end
-                
-                -- Registrar log para cada item depositado com sua quantidade
-                local itemName = vRP.getItemName(k)
-                vRP.sendLog("https://discord.com/api/webhooks/1195352561356656671/M3KO_6fud2VrgB7JRjhIf9OEXyeDGcOzX0ydtaU4C6bJyTKP8lqBEX5zAgOg_zc5Rjjy", "O ID "..user_id.." depositou o item: "..itemName.." na quantidade de "..amount)
+
+                -- LOG DIÁRIO (facs_farm_logs) - Novo
+                vRP.execute('sjr/setFarmLogs', {
+                    user_id = user_id,
+                    item_name = k,  -- Nome do item
+                    amount = amount -- Quantidade depositada
+                })
+                print("Log salvo para item:", k, " Quantidade:", amount)
+
+                -- Registrar log (webhook)
+                local itemName = vRP.getItemName(k) or k
+                vRP.sendLog(
+                    "https://discordapp.com/api/webhooks/1320896885401063454/ExJroDXT-KMS0lBKKV1B3gkDJHac-QmQnWd8sughw-coE3_gpBef7Uase8m6CZKTa5HT", 
+                    "O ID "..user_id.." depositou o item: "..itemName.." na quantidade de "..amount
+                )
             end
         end
-        
-        -- Ações após o depósito
+
+        -- Feedback para o jogador
         if depositou then
             TriggerClientEvent('Notify', source, 'sucesso', "Itens guardados com sucesso.", 5000)
             vRP.setSData('Storage:'..info['locations'][id].requireStorage.name, json.encode(storage))
             return true
         end
     end
-    
     return false
 end
+
+
 
 
 
