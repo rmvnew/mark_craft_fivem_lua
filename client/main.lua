@@ -206,11 +206,11 @@ RegisterNUICallback('startCollect', function(data,cb)
 						DrawMarker(21,indexedCoords.x, indexedCoords.y, indexedCoords.z,0,0,0,0,180.0,130.0,1.0,1.0,0.5, 130, 109, 255,180 ,1,0,0,1)
 
 						if distance <= 2.0 then
-							if IsControlJustReleased(1, 51) and delay <= 0 and not IsPedInAnyVehicle(PlayerPedId()) then 
+							-- if IsControlJustReleased(1, 51) and delay <= 0 and not IsPedInAnyVehicle(PlayerPedId()) then 
 								delay = 5
 
 								if vSERVER.giveItem(itemRoute) then
-									vRP._playAnim(false,{{"pickup_object","pickup_low"}},false)
+									-- vRP._playAnim(false,{{"pickup_object","pickup_low"}},false)
 									itemNumRoute = itemNumRoute + 1
 									if itemNumRoute > #routeIndexed then
 										itemNumRoute = 1
@@ -218,7 +218,7 @@ RegisterNUICallback('startCollect', function(data,cb)
 									RemoveBlip(blips)
 									CriandoBlip(itemNumRoute, direction)
 								end
-							end
+							-- end
 						end
 					end
 				-- end
