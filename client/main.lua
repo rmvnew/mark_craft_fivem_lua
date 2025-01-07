@@ -88,7 +88,7 @@ CreateThread(function()
                             
                             if vSERVER.checkPerm(w.tablePermission) then
 
-                                print(">>>>>>>>>>>>>>>>>")
+                                
                                 type = k
                                 id = l
                                 SetNuiFocus(true,true)
@@ -359,4 +359,7 @@ end
 
 
 
-
+RegisterNUICallback('startDelivery', function(data, cb)
+    print("startDelivery chamado: ", json.encode(data))
+    cb(true)
+end)

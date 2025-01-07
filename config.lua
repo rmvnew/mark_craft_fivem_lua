@@ -880,6 +880,7 @@ Config = {
                     itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
                     requires = {
                         -- ITENS NECESSARIOS PARA O CRAFT
+                        -- { item = "dinheirosujo" , amount = 100000 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
                         { item = "dinheirosujo" , amount = 100000 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
                         { item = "alvejante" , amount = 25 }  
                     }
@@ -1287,7 +1288,7 @@ Config = {
             {['x'] = -195.33979797363, ['y'] = -835.03845214844, ['z'] = 30.730991363525}
         },
         ['NORTE'] = {
-            {['x'] = 1538.04, ['y'] = 784.27, ['z'] = 77.45},
+            {['x'] = -1369.47, ['y'] = -618.87, ['z'] = 30.31},
             {['x'] = 2521.86, ['y'] = 2594.77, ['z'] = 37.95},
             {['x'] = 2664.22, ['y'] = 3277.97, ['z'] = 55.25},
             {['x'] = 2617.23, ['y'] = 4790.63, ['z'] = 34.26},
