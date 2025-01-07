@@ -9,10 +9,20 @@ craftingItem = {}
 vRP.prepare('sjr/setItens', 'REPLACE INTO facs_farmsystem(user_id, itens, day) VALUES(@user_id, @itens, @day)')
 vRP.prepare('sjr/getItens', 'SELECT * from facs_farmsystem WHERE user_id = @user_id')
 
-vRP.prepare('sjr/setFarmLogs', [[
+vRP.prepare('sjr/selectFarmLog', [[
+    SELECT * FROM facs_farm_logs 
+    WHERE user_id = @user_id AND item_name = @item_name AND date = CURDATE()
+]])
+
+vRP.prepare('sjr/updateFarmLogs', [[
+    UPDATE facs_farm_logs
+    SET amount = amount + @amount
+    WHERE user_id = @user_id AND item_name = @item_name AND date = CURDATE()
+]])
+
+vRP.prepare('sjr/insertFarmLogs', [[
     INSERT INTO facs_farm_logs (user_id, item_name, amount, date)
     VALUES (@user_id, @item_name, @amount, CURDATE())
-    ON DUPLICATE KEY UPDATE amount = amount + VALUES(amount)
 ]])
 
 
@@ -265,7 +275,6 @@ end
 
 
 
-
 src.storageItemAll = function(type, id)
     print(">>> CHAMADA: storageItemAll")
     local source = source
@@ -281,6 +290,7 @@ src.storageItemAll = function(type, id)
             TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazém, abra e feche e tente novamente.", 5000)
             return false
         end
+        
         if not Config.Storages[info['locations'][id].requireStorage.name] or
            not Config.Storages[info['locations'][id].requireStorage.name].itens then
             TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazém, abra e feche e tente novamente.", 5000)
@@ -324,13 +334,29 @@ src.storageItemAll = function(type, id)
                     })
                 end
 
-                -- LOG DIÁRIO (facs_farm_logs) - Novo
-                vRP.execute('sjr/setFarmLogs', {
+                -- Lógica de Log Diário
+                local result = vRP.query('sjr/selectFarmLog', {
                     user_id = user_id,
-                    item_name = k,  -- Nome do item
-                    amount = amount -- Quantidade depositada
+                    item_name = k
                 })
-                print("Log salvo para item:", k, " Quantidade:", amount)
+
+                if #result > 0 then
+                    -- Se o item já existe, faz o UPDATE
+                    vRP.execute('sjr/updateFarmLogs', {
+                        user_id = user_id,
+                        item_name = k,
+                        amount = amount
+                    })
+                    print("Registro atualizado para item:", k, "Quantidade:", amount)
+                else
+                    -- Se não existe, faz o INSERT
+                    vRP.execute('sjr/insertFarmLogs', {
+                        user_id = user_id,
+                        item_name = k,
+                        amount = amount
+                    })
+                    print("Novo registro inserido para item:", k, "Quantidade:", amount)
+                end
 
                 -- Registrar log (webhook)
                 local itemName = vRP.getItemName(k) or k
