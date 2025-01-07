@@ -2,6 +2,7 @@ Config = {
     images = 'http://localhost/images/', -- URL DAS SUAS IMAGENS
     storeLink = 'seulinkaqui', -- LINK DA SUA LOJA
     dirtymoney = 'dinheirosujo', -- SPAWN DO DINHEIRO SUJO
+
     Tables = {
         ['Armas'] = {
             -- INICIO DE UMA BANCADA, NUNCA REPETIR ESSE NOME
@@ -438,7 +439,7 @@ Config = {
                 },
 
            }
-    }, -- FIM DE UMA BANCADA
+        }, -- FIM DE UMA BANCADA
 
         ['Desmanche'] = {
             -- INICIO DE UMA BANCADA, NUNCA REPETIR ESSE NOME
@@ -583,295 +584,295 @@ Config = {
                         end
                     end -- BLIP DO CHAO
                 }
-             
+                
         }, -- FIM DE UMA BANCADA
 
-    }, -- FIM DA  CONFIGURACAO
+        }, -- FIM DA  CONFIGURACAO
 
-    ['Maconha'] = {
-        -- INICIO DE UMA BANCADA, NUNCA REPETIR ESSE NOME
-        craft = {
-            -- ZONA DE CRAFT
-
-            {
-                item = 'maconha', -- SPAWN DO ITEM
-                amount = 5, -- Quantidade de item que vai receber por unidade selecionada.
-                itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
-                requires = {
-                    -- ITENS NECESSARIOS PARA O CRAFT
-                    { item = "adubo" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
-                }
-            }
-
-        },
-        farm = {
-            -- ZONA DE FARM
-            list = {
-                {
-                    dangerRoute = {
-                        status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                        percentualPolice = 3 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    },
-                    dominationBonus = {
-                        -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
-                        status = true, -- Se o sistema ta ativo ou não
-                        zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
-                        bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
-                    },
-                    itensList = {
-                        {item = 'adubo', minAmount = 5, maxAmount = 10},
-                    }
-                },
-
-            }
-        },
-        delivery = {
-            list = {
-
-            }
-        },
-        locations = {
-            -- LOCALIZACOES DESSAS BANCADAS
-            {
-                -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
-                name = 'Vermelhos',
-                coords = vec3(1277.79, -184.82, 103.66), -- COORDENADAS DA BANCADA
-                requireStorage = {
-                    -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
-                    active = true,
-                    name = 'Vermelhos'
-                },
-                tablePermission = 'Vermelhos.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
-                craftPermission = 'liderVermelhos.permissao', -- PERMISSAO PARA CRAFTAR ITEM
-                drawMarker = function(coords, dist)
-                    if dist <= 5.0 then
-                        DrawText3Ds(
-                            coords.x,
-                            coords.y,
-                            coords.z + 0.1,
-                            'Pressione ~p~[E]~w~ para acessar a bancada.'
-                        )
-                        DrawMarker(
-                            27,
-                            coords.x,
-                            coords.y,
-                            coords.z - 0.95,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            1.5,
-                            1.5,
-                            1.5,
-                            132,
-                            102,
-                            226,
-                            180,
-                            0,
-                            0,
-                            0,
-                            1
-                        )
-                    end
-                end -- BLIP DO CHAO
-            },
-
-    }, -- FIM DE UMA BANCADA
-
-}, -- FIM DA  CONFIGURACAO
-
-['Cocaina'] = {
-    -- INICIO DE UMA BANCADA, NUNCA REPETIR ESSE NOME
-    craft = {
-        -- ZONA DE CRAFT
-
-        {
-            item = 'cocaina', -- SPAWN DO ITEM
-            amount = 5, -- Quantidade de item que vai receber por unidade selecionada.
-            itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
-            requires = {
-                -- ITENS NECESSARIOS PARA O CRAFT
-                { item = "componenteq" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
-            }
-        }
-
-    },
-    farm = {
-        -- ZONA DE FARM
-        list = {
-            {
-                dangerRoute = {
-                    status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    percentualPolice = 3 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                },
-                dominationBonus = {
-                    -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
-                    status = true, -- Se o sistema ta ativo ou não
-                    zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
-                    bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
-                },
-                itensList = {
-                    {item = 'componenteq', minAmount = 5, maxAmount = 10},
-                }
-            },
-
-        }
-    },
-    delivery = {
-        list = {
-
-        }
-    },
-    locations = {
-        -- LOCALIZACOES DESSAS BANCADAS
-        {
-            -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
-            name = 'Laranjas',
-            coords = vec3(861.5, -253.57, 68.34), -- COORDENADAS DA BANCADA
-            requireStorage = {
-                -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
-                active = true,
-                name = 'Laranjas'
-            },
-            tablePermission = 'Laranjas.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
-            craftPermission = 'liderLaranjas.permissao', -- PERMISSAO PARA CRAFTAR ITEM
-            drawMarker = function(coords, dist)
-                if dist <= 5.0 then
-                    DrawText3Ds(
-                        coords.x,
-                        coords.y,
-                        coords.z + 0.1,
-                        'Pressione ~p~[E]~w~ para acessar a bancada.'
-                    )
-                    DrawMarker(
-                        27,
-                        coords.x,
-                        coords.y,
-                        coords.z - 0.95,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        1.5,
-                        1.5,
-                        1.5,
-                        132,
-                        102,
-                        226,
-                        180,
-                        0,
-                        0,
-                        0,
-                        1
-                    )
-                end
-            end -- BLIP DO CHAO
-        },
-
-}, -- FIM DE UMA BANCADA
-
-}, -- FIM DA  CONFIGURACAO
-
-['lsd'] = {
-    -- INICIO DE UMA BANCADA, NUNCA REPETIR ESSE NOME
-    craft = {
-        -- ZONA DE CRAFT
-
-        {
-            item = 'lsd', -- SPAWN DO ITEM
-            amount = 5, -- Quantidade de item que vai receber por unidade selecionada.
-            itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
-            requires = {
-                -- ITENS NECESSARIOS PARA O CRAFT
-                { item = "acidoc" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
-            }
-        }
-
-    },
-    farm = {
-        -- ZONA DE FARM
-        list = {
-            {
-                dangerRoute = {
-                    status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    percentualPolice = 3 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                },
-                dominationBonus = {
-                    -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
-                    status = true, -- Se o sistema ta ativo ou não
-                    zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
-                    bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
-                },
-                itensList = {
-                    {item = 'acidoc', minAmount = 5, maxAmount = 10},
-                }
-            }
-
-        }
-    },
-    delivery = {
-        list = {
-
-        }
-    },
-    locations = {
-        -- LOCALIZACOES DESSAS BANCADAS
-        {
-            -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
-            name = 'Roxos',
-            coords = vec3(2045.23, 3375.73, 47.77), -- COORDENADAS DA BANCADA
-            requireStorage = {
-                -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
-                active = true,
-                name = 'Roxos'
-            },
-            tablePermission = 'Roxos.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
-            craftPermission = 'liderRoxos.permissao', -- PERMISSAO PARA CRAFTAR ITEM
-            drawMarker = function(coords, dist)
-                if dist <= 5.0 then
-                    DrawText3Ds(
-                        coords.x,
-                        coords.y,
-                        coords.z + 0.1,
-                        'Pressione ~p~[E]~w~ para acessar a bancada.'
-                    )
-                    DrawMarker(
-                        27,
-                        coords.x,
-                        coords.y,
-                        coords.z - 0.95,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        1.5,
-                        1.5,
-                        1.5,
-                        132,
-                        102,
-                        226,
-                        180,
-                        0,
-                        0,
-                        0,
-                        1
-                    )
-                end
-            end -- BLIP DO CHAO
-        },
-
-}, -- FIM DE UMA BANCADA
-
-}, -- FIM DA  CONFIGURACAO
-
-        ['Lavagem'] = {
+        ['Maconha'] = {
             -- INICIO DE UMA BANCADA, NUNCA REPETIR ESSE NOME
+            craft = {
+                -- ZONA DE CRAFT
+
+                {
+                    item = 'maconha', -- SPAWN DO ITEM
+                    amount = 5, -- Quantidade de item que vai receber por unidade selecionada.
+                    itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
+                    requires = {
+                        -- ITENS NECESSARIOS PARA O CRAFT
+                        { item = "adubo" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                    }
+                }
+
+            },
+            farm = {
+                -- ZONA DE FARM
+                list = {
+                    {
+                        dangerRoute = {
+                            status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
+                            percentualPolice = 3 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
+                        },
+                        dominationBonus = {
+                            -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
+                            status = true, -- Se o sistema ta ativo ou não
+                            zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
+                            bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
+                        },
+                        itensList = {
+                            {item = 'adubo', minAmount = 5, maxAmount = 10},
+                        }
+                    },
+
+                }
+            },
+            delivery = {
+                list = {
+
+                }
+            },
+            locations = {
+                -- LOCALIZACOES DESSAS BANCADAS
+                {
+                    -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
+                    name = 'Vermelhos',
+                    coords = vec3(1277.79, -184.82, 103.66), -- COORDENADAS DA BANCADA
+                    requireStorage = {
+                        -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
+                        active = true,
+                        name = 'Vermelhos'
+                    },
+                    tablePermission = 'Vermelhos.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'liderVermelhos.permissao', -- PERMISSAO PARA CRAFTAR ITEM
+                    drawMarker = function(coords, dist)
+                        if dist <= 5.0 then
+                            DrawText3Ds(
+                                coords.x,
+                                coords.y,
+                                coords.z + 0.1,
+                                'Pressione ~p~[E]~w~ para acessar a bancada.'
+                            )
+                            DrawMarker(
+                                27,
+                                coords.x,
+                                coords.y,
+                                coords.z - 0.95,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1.5,
+                                1.5,
+                                1.5,
+                                132,
+                                102,
+                                226,
+                                180,
+                                0,
+                                0,
+                                0,
+                                1
+                            )
+                        end
+                    end -- BLIP DO CHAO
+                },
+
+        }, -- FIM DE UMA BANCADA
+
+        }, -- FIM DA  CONFIGURACAO
+
+        ['Cocaina'] = {
+            -- INICIO DE UMA BANCADA, NUNCA REPETIR ESSE NOME
+            craft = {
+                -- ZONA DE CRAFT
+
+                {
+                    item = 'cocaina', -- SPAWN DO ITEM
+                    amount = 5, -- Quantidade de item que vai receber por unidade selecionada.
+                    itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
+                    requires = {
+                        -- ITENS NECESSARIOS PARA O CRAFT
+                        { item = "componenteq" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                    }
+                }
+
+            },
+            farm = {
+                -- ZONA DE FARM
+                list = {
+                    {
+                        dangerRoute = {
+                            status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
+                            percentualPolice = 3 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
+                        },
+                        dominationBonus = {
+                            -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
+                            status = true, -- Se o sistema ta ativo ou não
+                            zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
+                            bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
+                        },
+                        itensList = {
+                            {item = 'componenteq', minAmount = 5, maxAmount = 10},
+                        }
+                    },
+
+                }
+            },
+            delivery = {
+                list = {
+
+                }
+            },
+            locations = {
+                -- LOCALIZACOES DESSAS BANCADAS
+                {
+                    -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
+                    name = 'Laranjas',
+                    coords = vec3(861.5, -253.57, 68.34), -- COORDENADAS DA BANCADA
+                    requireStorage = {
+                        -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
+                        active = true,
+                        name = 'Laranjas'
+                    },
+                    tablePermission = 'Laranjas.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'liderLaranjas.permissao', -- PERMISSAO PARA CRAFTAR ITEM
+                    drawMarker = function(coords, dist)
+                        if dist <= 5.0 then
+                            DrawText3Ds(
+                                coords.x,
+                                coords.y,
+                                coords.z + 0.1,
+                                'Pressione ~p~[E]~w~ para acessar a bancada.'
+                            )
+                            DrawMarker(
+                                27,
+                                coords.x,
+                                coords.y,
+                                coords.z - 0.95,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1.5,
+                                1.5,
+                                1.5,
+                                132,
+                                102,
+                                226,
+                                180,
+                                0,
+                                0,
+                                0,
+                                1
+                            )
+                        end
+                    end -- BLIP DO CHAO
+                },
+
+        }, -- FIM DE UMA BANCADA
+
+        }, -- FIM DA  CONFIGURACAO
+
+        ['lsd'] = {
+            -- INICIO DE UMA BANCADA, NUNCA REPETIR ESSE NOME
+            craft = {
+                -- ZONA DE CRAFT
+
+                {
+                    item = 'lsd', -- SPAWN DO ITEM
+                    amount = 5, -- Quantidade de item que vai receber por unidade selecionada.
+                    itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
+                    requires = {
+                        -- ITENS NECESSARIOS PARA O CRAFT
+                        { item = "acidoc" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                    }
+                }
+
+            },
+            farm = {
+                -- ZONA DE FARM
+                list = {
+                    {
+                        dangerRoute = {
+                            status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
+                            percentualPolice = 3 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
+                        },
+                        dominationBonus = {
+                            -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
+                            status = true, -- Se o sistema ta ativo ou não
+                            zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
+                            bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
+                        },
+                        itensList = {
+                            {item = 'acidoc', minAmount = 5, maxAmount = 10},
+                        }
+                    }
+
+                }
+            },
+            delivery = {
+                list = {
+
+                }
+            },
+            locations = {
+                -- LOCALIZACOES DESSAS BANCADAS
+                {
+                    -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
+                    name = 'Roxos',
+                    coords = vec3(2045.23, 3375.73, 47.77), -- COORDENADAS DA BANCADA
+                    requireStorage = {
+                        -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
+                        active = true,
+                        name = 'Roxos'
+                    },
+                    tablePermission = 'Roxos.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'liderRoxos.permissao', -- PERMISSAO PARA CRAFTAR ITEM
+                    drawMarker = function(coords, dist)
+                        if dist <= 5.0 then
+                            DrawText3Ds(
+                                coords.x,
+                                coords.y,
+                                coords.z + 0.1,
+                                'Pressione ~p~[E]~w~ para acessar a bancada.'
+                            )
+                            DrawMarker(
+                                27,
+                                coords.x,
+                                coords.y,
+                                coords.z - 0.95,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1.5,
+                                1.5,
+                                1.5,
+                                132,
+                                102,
+                                226,
+                                180,
+                                0,
+                                0,
+                                0,
+                                1
+                            )
+                        end
+                    end -- BLIP DO CHAO
+                },
+
+        }, -- FIM DE UMA BANCADA
+
+        }, -- FIM DA  CONFIGURACAO
+
+        -- INICIO DE UMA BANCADA, NUNCA REPETIR ESSE NOME
+        ['Lavagem'] = {
             craft = {
                 -- ZONA DE CRAFT
                 {
@@ -880,41 +881,10 @@ Config = {
                     itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
                     requires = {
                         -- ITENS NECESSARIOS PARA O CRAFT
-                        -- { item = "dinheirosujo" , amount = 100000 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
                         { item = "dinheirosujo" , amount = 100000 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
-                        { item = "alvejante" , amount = 25 }  
                     }
                 },
-                -- {
-                --     item = 'dinheiro', -- SPAWN DO ITEM
-                --     amount = 180000, -- Quantidade de item que vai receber por unidade selecionada.
-                --     itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
-                --     requires = {
-                --         -- ITENS NECESSARIOS PARA O CRAFT
-                --         { item = "dinheirosujo" , amount = 200000 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
-                --         { item = "alvejante" , amount = 25 }  
-                --     }
-                -- },
-                -- {
-                --     item = 'dinheiro', -- SPAWN DO ITEM
-                --     amount = 280000, -- Quantidade de item que vai receber por unidade selecionada.
-                --     itemTime = 20, -- 30 segundo(s) para a maquina concluir o craft.
-                --     requires = {
-                --         -- ITENS NECESSARIOS PARA O CRAFT
-                --         { item = "dinheirosujo" , amount = 300000 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
-                --         { item = "alvejante" , amount = 40 }  
-                --     }
-                -- },
-                -- {
-                --     item = 'dinheiro', -- SPAWN DO ITEM
-                --     amount = 800000, -- Quantidade de item que vai receber por unidade selecionada.
-                --     itemTime = 30, -- 30 segundo(s) para a maquina concluir o craft.
-                --     requires = {
-                --         -- ITENS NECESSARIOS PARA O CRAFT
-                --         { item = "dinheirosujo" , amount = 1000000 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
-                --         { item = "alvejante" , amount = 60 } 
-                --     }
-                -- },
+                
                 {
                     item = 'capuz', -- SPAWN DO ITEM
                     amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
@@ -934,16 +904,27 @@ Config = {
                     }
                 },
                 {
-                    item = 'c4', -- SPAWN DO ITEM
+                    item = 'body_armor', -- SPAWN DO ITEM
                     amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
-                    itemTime = 25, -- 30 segundo(s) para a maquina concluir o craft.
+                    itemTime = 75, -- 30 segundo(s) para a maquina concluir o craft.
                     requires = {
                         -- ITENS NECESSARIOS PARA O CRAFT
-                        { item = "contador" , amount = 1 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
-                        { item = "linha" , amount = 10 }, 
-                        { item = "polvora" , amount = 30 },
+                        { item = "placa-metal" , amount = 40 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "linha" , amount = 20 }, 
+                        { item = "tecido" , amount = 35 },
                     }
                 },
+                -- {
+                --     item = 'c4', -- SPAWN DO ITEM
+                --     amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
+                --     itemTime = 25, -- 30 segundo(s) para a maquina concluir o craft.
+                --     requires = {
+                --         -- ITENS NECESSARIOS PARA O CRAFT
+                --         { item = "contador" , amount = 1 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                --         { item = "linha" , amount = 10 }, 
+                --         { item = "polvora" , amount = 30 },
+                --     }
+                -- },
                 {
                     item = 'keycard', -- SPAWN DO ITEM
                     amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
@@ -951,7 +932,7 @@ Config = {
                     requires = {
                         -- ITENS NECESSARIOS PARA O CRAFT
                         { item = "cartaovirgem" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
-                        { item = "pendrive" , amount = 20 } 
+                        { item = "placa-metal" , amount = 20 } 
                     }
                 },
 
@@ -971,58 +952,44 @@ Config = {
                             bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
                         },
                         itensList = {
-                            {item = 'alvejante', minAmount = 3, maxAmount = 6},
-                            {item = 'tecido', minAmount = 3, maxAmount = 6},
-                            {item = 'placa-metal', minAmount = 3, maxAmount = 6},
+                            {item = 'linha', minAmount = 5, maxAmount = 10},
+                            {item = 'tecido', minAmount = 5, maxAmount = 10},
+                            {item = 'placa-metal', minAmount = 5, maxAmount = 10},
+                            {item = 'cartaovirgem', minAmount = 5, maxAmount = 10},
                         }
                     },
-                    {
-                        dangerRoute = {
-                            status = false, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                            percentualPolice = 30 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                        },
-                        dominationBonus = {
-                            -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
-                            status = true, -- Se o sistema ta ativo ou não
-                            zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
-                            bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
-                        },
-                        itensList = {
-                            {item = 'contador', minAmount = 3, maxAmount = 6},
-                            {item = 'linha', minAmount = 3, maxAmount = 6},
-                            {item = 'polvora', minAmount = 3, maxAmount = 6},
-                        }
-                    },
-                    {
-                        dangerRoute = {
-                            status = false, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                            percentualPolice = 30 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                        },
-                        dominationBonus = {
-                            -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
-                            status = true, -- Se o sistema ta ativo ou não
-                            zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
-                            bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
-                        },
-                        itensList = {
-                            {item = 'cartaovirgem', minAmount = 3, maxAmount = 6},
-                            {item = 'pendrive', minAmount = 3, maxAmount = 6},
-                        }
-                    },
+                    -- {
+                    --     dangerRoute = {
+                    --         status = false, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
+                    --         percentualPolice = 30 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
+                    --     },
+                    --     dominationBonus = {
+                    --         -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
+                    --         status = true, -- Se o sistema ta ativo ou não
+                    --         zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
+                    --         bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
+                    --     },
+                    --     itensList = {
+                    --         {item = 'contador', minAmount = 3, maxAmount = 6},
+                    --         {item = 'linha', minAmount = 3, maxAmount = 6},
+                    --         {item = 'polvora', minAmount = 3, maxAmount = 6},
+                    --     }
+                    -- },
+                   
                 }
             },
             delivery = {
                 list = {
-                    -- {
-                    --     dangerRoute = {
-                    --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    --         percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    --     },
-                    --     itensList = {
-                    --         {item = 'cocaina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --         {item = 'maconha', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --     }
-                    -- },
+                    {
+                        dangerRoute = {
+                            status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
+                            percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
+                        },
+                        itensList = {
+                            {item = 'cocaina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
+                            {item = 'maconha', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
+                        }
+                    },
                     -- {
                     --     dangerRoute = {
                     --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
@@ -1051,8 +1018,8 @@ Config = {
                     --     itensList = {
                     --         {item = 'lsd', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
                     --         {item = 'cocaina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                     --   }
-                  --  }
+                        --   }
+                    --  }
                 }
             },
             locations = {
@@ -1152,11 +1119,12 @@ Config = {
             }
         }, -- FIM DE UMA BANCADA
 
-        
-
-        
 
     }, -- FIM DA  CONFIGURACAO
+
+
+
+
     -- CONFIGURACAO DOS ARMAZENS
     Storages = {
         ---ARMAS
@@ -1263,6 +1231,13 @@ Config = {
 
 
     }, -- final do storages
+
+
+
+
+
+
+
     -- LOCALIZAÇÕES DAS ROTAS DE COLETA
     Locations = {
         ['SUL'] = {
