@@ -14,16 +14,19 @@ vRP.prepare('sjr/selectFarmLog', [[
     WHERE user_id = @user_id AND item_name = @item_name AND date = CURDATE()
 ]])
 
+
+
 vRP.prepare('sjr/updateFarmLogs', [[
     UPDATE facs_farm_logs
     SET amount = amount + @amount
-    WHERE user_id = @user_id AND item_name = @item_name AND date = CURDATE()
+    WHERE user_id = @user_id AND org_name = @org_name AND item_name = @item_name AND date = CURDATE()
 ]])
 
 vRP.prepare('sjr/insertFarmLogs', [[
-    INSERT INTO facs_farm_logs (user_id, item_name, amount, date)
-    VALUES (@user_id, @item_name, @amount, CURDATE())
+    INSERT INTO facs_farm_logs (user_id, org_name, item_name, amount, date)
+    VALUES (@user_id, @org_name, @item_name, @amount, CURDATE())
 ]])
+
 
 
 src.checkPerm = function(perm)
@@ -53,22 +56,30 @@ src.getStorage = function(data)
     return {}
 end
 
+
+
 src.storageItem = function(data, type, id)
     local source = source
     local user_id = vRP.getUserId(source)
     if user_id then
         local query = vRP.query('sjr/getItens', { user_id = user_id })
+        local org_name = vRP.getUserOrgName(user_id)  -- Pega o nome da organização do jogador
+
         local info = Config.Tables[type]
-        if not info or not info['locations'] or not info['locations'][id] or not info['locations'][id].requireStorage or not info['locations'][id].requireStorage.name then TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazem, abra e feche e tente novamente.", 5000) return true end
+        if not info or not info['locations'] or not info['locations'][id] or not info['locations'][id].requireStorage or not info['locations'][id].requireStorage.name then
+            TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazém, abra e feche e tente novamente.", 5000)
+            return true
+        end
         
         local datatable = vRP.getSData('Storage:'..info['locations'][id].requireStorage.name)
         local storage = json.decode(datatable) or {}
         if storage[data.name] then
-            local amount = vRP.getInventoryItemAmount(user_id,data.name)
+            local amount = vRP.getInventoryItemAmount(user_id, data.name)
             if amount > 0 and vRP.tryGetInventoryItem(user_id, data.name, amount, true) then
                 storage[data.name] = parseInt(storage[data.name]) + amount
-                vRP.setSData('Storage:'..info['locations'][id].requireStorage.name,json.encode(storage))
+                vRP.setSData('Storage:'..info['locations'][id].requireStorage.name, json.encode(storage))
                 local temp = os.date("*t", os.time())
+
                 if #query > 0 then
                     local value = json.decode(query[1].itens)
                     if value[data.name] then
@@ -76,11 +87,27 @@ src.storageItem = function(data, type, id)
                     else
                         value[data.name] = amount
                     end
-                    vRP.execute('sjr/setItens', {user_id = user_id, itens = json.encode(value), day = temp.day})
+                    vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
+
+                    -- Atualiza logs de farm
+                    vRP.execute('sjr/updateFarmLogs', {
+                        user_id = user_id,
+                        org_name = org_name,
+                        item_name = data.name,
+                        amount = amount
+                    })
                 else
                     local value = {}
                     value[data.name] = amount
-                    vRP.execute('sjr/setItens', {user_id = user_id, itens = json.encode(value), day = temp.day})
+                    vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
+
+                    -- Insere novo log se não existir
+                    vRP.execute('sjr/insertFarmLogs', {
+                        user_id = user_id,
+                        org_name = org_name,
+                        item_name = data.name,
+                        amount = amount
+                    })
                 end
                 TriggerClientEvent('Notify', source, 'sucesso', "Item guardado com sucesso.", 5000)
             else
@@ -88,11 +115,12 @@ src.storageItem = function(data, type, id)
             end
         else
             storage[data.name] = 0
-            local amount = vRP.getInventoryItemAmount(user_id,data.name)
+            local amount = vRP.getInventoryItemAmount(user_id, data.name)
             if amount > 0 and vRP.tryGetInventoryItem(user_id, data.name, amount, true) then
                 storage[data.name] = amount
-                vRP.setSData('Storage:'..info['locations'][id].requireStorage.name,json.encode(storage))
+                vRP.setSData('Storage:'..info['locations'][id].requireStorage.name, json.encode(storage))
                 local temp = os.date("*t", os.time())
+
                 if #query > 0 then
                     local value = json.decode(query[1].itens)
                     if value[data.name] then
@@ -100,11 +128,25 @@ src.storageItem = function(data, type, id)
                     else
                         value[data.name] = amount
                     end
-                    vRP.execute('sjr/setItens', {user_id = user_id, itens = json.encode(value), day = temp.day})
+                    vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
+
+                    vRP.execute('sjr/updateFarmLogs', {
+                        user_id = user_id,
+                        org_name = org_name,
+                        item_name = data.name,
+                        amount = amount
+                    })
                 else
                     local value = {}
                     value[data.name] = amount
-                    vRP.execute('sjr/setItens', {user_id = user_id, itens = json.encode(value), day = temp.day})
+                    vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
+
+                    vRP.execute('sjr/insertFarmLogs', {
+                        user_id = user_id,
+                        org_name = org_name,
+                        item_name = data.name,
+                        amount = amount
+                    })
                 end
                 TriggerClientEvent('Notify', source, 'sucesso', "Item guardado com sucesso.", 5000)
             else
@@ -113,6 +155,26 @@ src.storageItem = function(data, type, id)
         end
     end
     return true
+end
+
+
+
+vRP.prepare('vRP/getUserOrgByUserId', [[
+  SELECT org
+  FROM flow_orgs
+  WHERE JSON_VALUE(membros, CONCAT('$.', @user_id, '.nome')) IS NOT NULL;
+]])
+
+
+function vRP.getUserOrgName(user_id)
+    print("getUserOrgName: user_id recebido = ", user_id)
+    local rows = vRP.query('vRP/getUserOrgByUserId', { user_id = user_id })
+    print("getUserOrgName: rows = ", json.encode(rows)) -- Use json.encode para ver a estrutura
+    if #rows > 0 then
+        print("getUserOrgName: org = ", rows[1].org)
+        return rows[1].org or "Sem Organização"
+    end
+    return "Sem Organização"
 end
 
 
@@ -198,90 +260,18 @@ src.producedItem = function(data, type)
     end
 end
 
--- old function storageAl
-
--- src.storageItemAll = function(type, id)
-
-
---     print(">>> CHAMADA: storageItemAll")
-
---     local source = source
---     local user_id = vRP.getUserId(source)
-    
---     if user_id then
---         local query = vRP.query('sjr/getItens', { user_id = user_id })
---         local info = Config.Tables[type]
-        
---         -- Verificações de configuração
---         if not info or not info['locations'] or not info['locations'][id] or not info['locations'][id].requireStorage or not info['locations'][id].requireStorage.name then
---             TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazém, abra e feche e tente novamente.", 5000)
---             return false
---         end
-        
---         if not Config.Storages[info['locations'][id].requireStorage.name] or not Config.Storages[info['locations'][id].requireStorage.name].itens then
---             TriggerClientEvent('Notify', source, 'negado', "Não foi encontrado o armazém, abra e feche e tente novamente.", 5000)
---             return false
---         end
-        
---         local datatable = vRP.getSData('Storage:'..info['locations'][id].requireStorage.name)
---         local storage = json.decode(datatable) or {}
---         local depositou = false
---         local temp = os.date("*t", os.time())
-        
---         -- Processamento de itens
---         for k, v in pairs(Config.Storages[info['locations'][id].requireStorage.name].itens) do
---             local amount = vRP.getInventoryItemAmount(user_id, k)
---             if amount > 0 and vRP.tryGetInventoryItem(user_id, k, amount, true) then
---                 if storage[k] then
---                     storage[k] = parseInt(storage[k]) + amount
---                 else
---                     storage[k] = amount
---                 end
---                 depositou = true
-                
---                 -- Atualização dos itens no banco de dados
---                 if #query > 0 then
---                     local value = json.decode(query[1].itens)
---                     if value[k] then
---                         value[k] = value[k] + amount
---                     else
---                         value[k] = amount
---                     end
---                     vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
---                 else
---                     local value = {}
---                     value[k] = amount
---                     vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
---                 end
-                
---                 -- Registrar log para cada item depositado com sua quantidade
---                 local itemName = vRP.getItemName(k)
---                 vRP.sendLog("https://discord.com/api/webhooks/1195352561356656671/M3KO_6fud2VrgB7JRjhIf9OEXyeDGcOzX0ydtaU4C6bJyTKP8lqBEX5zAgOg_zc5Rjjy", "O ID "..user_id.." depositou o item: "..itemName.." na quantidade de "..amount)
---             end
---         end
-        
---         -- Ações após o depósito
---         if depositou then
---             TriggerClientEvent('Notify', source, 'sucesso', "Itens guardados com sucesso.", 5000)
---             vRP.setSData('Storage:'..info['locations'][id].requireStorage.name, json.encode(storage))
---             return true
---         end
---     end
-    
---     return false
--- end
-
--- ###########################################
-
 
 
 src.storageItemAll = function(type, id)
     print(">>> CHAMADA: storageItemAll")
     local source = source
     local user_id = vRP.getUserId(source)
+    print("storageItemAll: user_id = ", user_id)
     
     if user_id then
         local query = vRP.query('sjr/getItens', { user_id = user_id })
+        local org_name = vRP.getUserOrgName(user_id) -- <<-- pegue aqui também
+        print("storageItemAll: org_name = ", org_name)
         local info = Config.Tables[type]
 
         -- Verificações de config
@@ -311,7 +301,7 @@ src.storageItemAll = function(type, id)
                 storage[k] = storage[k] + amount
                 depositou = true
                 
-                -- Atualiza facs_farmsystem (Depósito principal)
+                -- Atualiza facs_farmsystem
                 if #query > 0 then
                     local value = json.decode(query[1].itens) or {}
                     if value[k] then
@@ -341,21 +331,21 @@ src.storageItemAll = function(type, id)
                 })
 
                 if #result > 0 then
-                    -- Se o item já existe, faz o UPDATE
+                    -- Se o item já existe, faz UPDATE
                     vRP.execute('sjr/updateFarmLogs', {
                         user_id = user_id,
+                        org_name = org_name,         -- <<-- adicione isto
                         item_name = k,
                         amount = amount
                     })
-                    print("Registro atualizado para item:", k, "Quantidade:", amount)
                 else
-                    -- Se não existe, faz o INSERT
+                    -- Se não existe, faz INSERT
                     vRP.execute('sjr/insertFarmLogs', {
                         user_id = user_id,
+                        org_name = org_name,         -- <<-- adicione isto
                         item_name = k,
                         amount = amount
                     })
-                    print("Novo registro inserido para item:", k, "Quantidade:", amount)
                 end
 
                 -- Registrar log (webhook)
@@ -367,7 +357,6 @@ src.storageItemAll = function(type, id)
             end
         end
 
-        -- Feedback para o jogador
         if depositou then
             TriggerClientEvent('Notify', source, 'sucesso', "Itens guardados com sucesso.", 5000)
             vRP.setSData('Storage:'..info['locations'][id].requireStorage.name, json.encode(storage))
@@ -376,7 +365,6 @@ src.storageItemAll = function(type, id)
     end
     return false
 end
-
 
 
 
