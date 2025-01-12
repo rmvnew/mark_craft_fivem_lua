@@ -100,6 +100,10 @@ CreateThread(function()
                                     delivery = formatDelivery(v.delivery),
                                     collect = formatCollect(v.farm)
                                 })
+                            else
+                                TriggerEvent('Notify', 'negado', 'Você não tem permissão para acessar essa bancada.', 5)  
+                                PlaySoundFrontend(-1, "ERROR", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
+   
                             end
                         end
 

@@ -227,7 +227,7 @@ src.startCrafting = function(data, qtd, type, id)
                 craftingItem[user_id][data.name] = { amount = data.qtd * qtd, type = type, id = id, itens = removed }
                 
                 -- Registra o log do item craftado
-                vRP.sendLog("https://discord.com/api/webhooks/1195352561356656671/M3KO_6fud2VrgB7JRjhIf9OEXyeDGcOzX0ydtaU4C6bJyTKP8lqBEX5zAgOg_zc5Rjjy", "O ID "..user_id.." craftou o item: "..data.name.." na quantidade de "..(data.qtd * qtd))
+                vRP.sendLog("", "O ID "..user_id.." craftou o item: "..data.name.." na quantidade de "..(data.qtd * qtd))
                 
                 return true
             else
@@ -250,7 +250,7 @@ src.producedItem = function(data, type)
             vRP.giveInventoryItem(user_id, data.name, craftingItem[user_id][data.name].amount, true)
             
             -- Registra o log do item recebido como presente
-            vRP.sendLog("https://discord.com/api/webhooks/1195352561356656671/M3KO_6fud2VrgB7JRjhIf9OEXyeDGcOzX0ydtaU4C6bJyTKP8lqBEX5zAgOg_zc5Rjjy", "O ID "..user_id.." recebeu o item: "..data.name.." como presente na quantidade de "..craftingItem[user_id][data.name].amount)
+            vRP.sendLog("", "O ID "..user_id.." recebeu o item: "..data.name.." como presente na quantidade de "..craftingItem[user_id][data.name].amount)
             
             craftingItem[user_id][data.name] = nil
         else
@@ -351,7 +351,7 @@ src.storageItemAll = function(type, id)
                 -- Registrar log (webhook)
                 local itemName = vRP.getItemName(k) or k
                 vRP.sendLog(
-                    "https://discordapp.com/api/webhooks/1320896885401063454/ExJroDXT-KMS0lBKKV1B3gkDJHac-QmQnWd8sughw-coE3_gpBef7Uase8m6CZKTa5HT", 
+                    "", 
                     "O ID "..user_id.." depositou o item: "..itemName.." na quantidade de "..amount
                 )
             end
@@ -466,12 +466,6 @@ src.sellItem = function(data)
         return change
     end
 end
-
-
-
-
-
-
 
 
 
