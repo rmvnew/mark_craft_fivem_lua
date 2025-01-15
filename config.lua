@@ -1065,14 +1065,14 @@ Config = {
                 {
                     -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
                     name = 'Vanilla',
-                    coords = vec3(110.86, -1296.88, 29.27), -- COORDENADAS DA BANCADA
+                    coords = vec3(108.45,-1305.94,28.76), -- COORDENADAS DA BANCADA
                     requireStorage = {
                         -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
                         active = true,
                         name = 'Vanilla'
                     },
-                    tablePermission = 'Vanilla.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
-                    craftPermission = 'liderVanilla.permissao', -- PERMISSAO PARA CRAFTAR ITEM
+                    tablePermission = 'perm.vanilla', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'perm.lidervanilla', -- PERMISSAO PARA CRAFTAR ITEM
                     drawMarker = function(coords, dist)
                         if dist <= 5.0 then
                             DrawText3Ds(

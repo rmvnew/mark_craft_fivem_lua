@@ -11,7 +11,7 @@ vRP.prepare('sjr/getItens', 'SELECT * from facs_farmsystem WHERE user_id = @user
 
 vRP.prepare('sjr/selectFarmLog', [[
     SELECT * FROM facs_farm_logs 
-    WHERE user_id = @user_id AND item_name = @item_name AND date = CURDATE()
+    WHERE user_id = @user_id AND item_name = @item_name AND date = CURDATE() AND org_name = @org
 ]])
 
 
@@ -88,6 +88,7 @@ src.storageItem = function(data, type, id)
                         value[data.name] = amount
                     end
                     vRP.execute('sjr/setItens', { user_id = user_id, itens = json.encode(value), day = temp.day })
+
 
                     -- Atualiza logs de farm
                     vRP.execute('sjr/updateFarmLogs', {
@@ -167,11 +168,11 @@ vRP.prepare('vRP/getUserOrgByUserId', [[
 
 
 function vRP.getUserOrgName(user_id)
-    print("getUserOrgName: user_id recebido = ", user_id)
+    
     local rows = vRP.query('vRP/getUserOrgByUserId', { user_id = user_id })
-    print("getUserOrgName: rows = ", json.encode(rows)) -- Use json.encode para ver a estrutura
+   
     if #rows > 0 then
-        print("getUserOrgName: org = ", rows[1].org)
+       
         return rows[1].org or "Sem Organização"
     end
     return "Sem Organização"
@@ -263,15 +264,15 @@ end
 
 
 src.storageItemAll = function(type, id)
-    print(">>> CHAMADA: storageItemAll")
+  
     local source = source
     local user_id = vRP.getUserId(source)
-    print("storageItemAll: user_id = ", user_id)
+   
     
     if user_id then
         local query = vRP.query('sjr/getItens', { user_id = user_id })
         local org_name = vRP.getUserOrgName(user_id) -- <<-- pegue aqui também
-        print("storageItemAll: org_name = ", org_name)
+       
         local info = Config.Tables[type]
 
         -- Verificações de config
@@ -327,10 +328,12 @@ src.storageItemAll = function(type, id)
                 -- Lógica de Log Diário
                 local result = vRP.query('sjr/selectFarmLog', {
                     user_id = user_id,
-                    item_name = k
+                    item_name = k,
+                    org = org_name
                 })
 
                 if #result > 0 then
+                    
                     -- Se o item já existe, faz UPDATE
                     vRP.execute('sjr/updateFarmLogs', {
                         user_id = user_id,
@@ -339,6 +342,7 @@ src.storageItemAll = function(type, id)
                         amount = amount
                     })
                 else
+                   
                     -- Se não existe, faz INSERT
                     vRP.execute('sjr/insertFarmLogs', {
                         user_id = user_id,
@@ -358,7 +362,7 @@ src.storageItemAll = function(type, id)
         end
 
         if depositou then
-            TriggerClientEvent('Notify', source, 'sucesso', "Itens guardados com sucesso.", 5000)
+            TriggerClientEvent('Notify', source, 'sucesso', "Itens guardados com sucesso!!!.", 5000)
             vRP.setSData('Storage:'..info['locations'][id].requireStorage.name, json.encode(storage))
             return true
         end
