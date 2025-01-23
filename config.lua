@@ -36,8 +36,27 @@ local washing_itens = {
     ['tecido'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
 }
 
+local food_itens = {
+    ['leite_de_gado'] = 9999999,
+    ['graos_de_cafe'] = 9999999,
+    ['farinha_de_trigo'] = 9999999,
+    ['acucar'] = 9999999,
+    ['limao'] = 9999999,
+    ['laranja'] = 9999999,
+    ['carnedegado'] = 9999999,
+    ['sal'] = 9999999,
+    ['arroz'] = 9999999,
+    ['feijao'] = 9999999,
+    ['queijo'] = 9999999,
+    ['embutidos'] = 9999999,
+}
+
+
+
+
 Config = {
-    images = 'http://localhost/images/', -- URL DAS SUAS IMAGENS
+    -- images = 'http://localhost/images/', -- URL DAS SUAS IMAGENS
+    images = 'http://127.0.0.1/ultimate/inventario/', -- URL DAS SUAS IMAGENS
     storeLink = 'seulinkaqui', -- LINK DA SUA LOJA
     dirtymoney = 'dinheirosujo', -- SPAWN DO DINHEIRO SUJO
 
@@ -914,7 +933,7 @@ Config = {
             craft = {
                 -- ZONA DE CRAFT
                 {
-                    item = 'dinheiro', -- SPAWN DO ITEM
+                    item = 'money', -- SPAWN DO ITEM
                     amount = 80000, -- Quantidade de item que vai receber por unidade selecionada.
                     itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
                     requires = {
@@ -1158,6 +1177,252 @@ Config = {
         }, -- FIM DE UMA BANCADA
 
 
+
+        -- ##########################
+        -- #######|  testes  |#######
+        -- ##########################
+        
+        
+        
+        ['Restaurante'] = {
+            craft = {
+                -- ZONA DE CRAFT
+                {
+                    item = 'cafe_com_leite', -- SPAWN DO ITEM
+                    amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
+                    itemTime = 10, -- 30 segundo(s) para a maquina concluir o craft.
+                    requires = {
+                        -- ITENS NECESSARIOS PARA O CRAFT
+                        { item = "leite_de_gado" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "graos_de_cafe" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                    }
+                },
+                {
+                    item = 'sanduiche', -- SPAWN DO ITEM
+                    amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
+                    itemTime = 20, -- 30 segundo(s) para a maquina concluir o craft.
+                    requires = {
+                        -- ITENS NECESSARIOS PARA O CRAFT
+                        { item = "carnedegado" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "farinha_de_trigo" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "sal" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "queijo" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                    }
+                },
+                {
+                    item = 'marmita', -- SPAWN DO ITEM
+                    amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
+                    itemTime = 30, -- 30 segundo(s) para a maquina concluir o craft.
+                    requires = {
+                        -- ITENS NECESSARIOS PARA O CRAFT
+                        { item = "carnedegado" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "arroz" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "feijao" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                    }
+                },
+                {
+                    item = 'sucol', -- SPAWN DO ITEM
+                    amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
+                    itemTime = 10, -- 30 segundo(s) para a maquina concluir o craft.
+                    requires = {
+                        -- ITENS NECESSARIOS PARA O CRAFT
+                        { item = "laranja" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "acucar" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        
+                    }
+                },
+                {
+                    item = 'sucol2', -- SPAWN DO ITEM
+                    amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
+                    itemTime = 10, -- 30 segundo(s) para a maquina concluir o craft.
+                    requires = {
+                        -- ITENS NECESSARIOS PARA O CRAFT
+                        { item = "limao" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "acucar" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        
+                    }
+                },
+                {
+                    item = 'cachorroq', -- SPAWN DO ITEM
+                    amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
+                    itemTime = 20, -- 30 segundo(s) para a maquina concluir o craft.
+                    requires = {
+                        -- ITENS NECESSARIOS PARA O CRAFT
+                        { item = "embutidos" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "farinha_de_trigo" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "sal" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        
+                    }
+                },
+                {
+                    item = 'pizza', -- SPAWN DO ITEM
+                    amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
+                    itemTime = 30, -- 30 segundo(s) para a maquina concluir o craft.
+                    requires = {
+                        -- ITENS NECESSARIOS PARA O CRAFT
+                        { item = "embutidos" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "farinha_de_trigo" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "sal" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "queijo" , amount = 20 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        
+                    }
+                },
+                
+               
+
+            },
+            farm = {
+                -- ZONA DE FARM
+                list = {
+                    {
+                        dangerRoute = {
+                            status = false, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
+                            percentualPolice = 30 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
+                        },
+                        dominationBonus = {
+                            -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
+                            status = true, -- Se o sistema ta ativo ou não
+                            zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
+                            bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
+                        },
+                        itensList = {
+                            {item = 'leite_de_gado', minAmount = 5, maxAmount = 10},
+                            {item = 'graos_de_cafe', minAmount = 5, maxAmount = 10},
+                            {item = 'farinha_de_trigo', minAmount = 5, maxAmount = 10},
+                            {item = 'acucar', minAmount = 5, maxAmount = 10},
+                        }
+                    },
+                    {
+                        dangerRoute = {
+                            status = false, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
+                            percentualPolice = 30 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
+                        },
+                        dominationBonus = {
+                            -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
+                            status = true, -- Se o sistema ta ativo ou não
+                            zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
+                            bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
+                        },
+                        itensList = {
+                            {item = 'limao', minAmount = 5, maxAmount = 10},
+                            {item = 'laranja', minAmount = 5, maxAmount = 10},
+                            {item = 'carnedegado', minAmount = 5, maxAmount = 10},
+                            {item = 'sal', minAmount = 5, maxAmount = 10},
+                        }
+                    },
+                    {
+                        dangerRoute = {
+                            status = false, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
+                            percentualPolice = 30 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
+                        },
+                        dominationBonus = {
+                            -- Caso utilize o script mirtin_dominacao e queira dobrar/triplicar o farm se tiver a zona dominada.
+                            status = true, -- Se o sistema ta ativo ou não
+                            zone = false, -- Qual a zona que precisa ter dominada para boostar o farm. Exemplo: [ 'Armas', 'Municao' ou etc ]
+                            bonus = 2 -- 2x Quantidade que o farm vai duplicar quando estiver com a zona dominada.
+                        },
+                        itensList = {
+                            {item = 'arroz', minAmount = 5, maxAmount = 10},
+                            {item = 'feijao', minAmount = 5, maxAmount = 10},
+                            {item = 'queijo', minAmount = 5, maxAmount = 10},
+                            {item = 'embutidos', minAmount = 5, maxAmount = 10},
+                        }
+                    },
+                    
+                   
+                }
+            },
+            delivery = {
+                list = {
+                    {
+                        dangerRoute = {
+                            status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
+                            percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
+                        },
+                        itensList = {
+                            {item = 'cocaina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
+                            {item = 'maconha', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
+                        }
+                    },
+                    
+                }
+            },
+            locations = {
+                -- LOCALIZACOES DESSAS BANCADAS
+                {
+                    -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
+                    name = 'CatCafe',
+                    coords = vec3(-590.42,-1063.04,22.36), -- COORDENADAS DA BANCADA
+                    requireStorage = {
+                        -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
+                        active = true,
+                        name = 'CatCafe'
+                    },
+                    tablePermission = 'perm.catcafe', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'perm.lidercatcafe', -- PERMISSAO PARA CRAFTAR ITEM
+                    drawMarker = function(coords, dist)
+                        if dist <= 5.0 then
+                            DrawText3Ds(
+                                coords.x,
+                                coords.y,
+                                coords.z + 0.1,
+                                'Pressione ~p~[E]~w~ para acessar a bancada.'
+                            )
+                            DrawMarker(
+                                27,
+                                coords.x,
+                                coords.y,
+                                coords.z - 0.95,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1.5,
+                                1.5,
+                                1.5,
+                                132,
+                                102,
+                                226,
+                                180,
+                                0,
+                                0,
+                                0,
+                                1
+                            )
+                        end
+                    end -- BLIP DO CHAO
+                },
+                -- LOCALIZACOES DESSAS BANCADAS
+               
+
+            }
+        }, -- FIM DE
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        -- ##########################
+        -- #######|  testes  |#######
+        -- ##########################
+
+
+
+
+
+
+
+
+
+
+
+
     }, -- FIM DA  CONFIGURACAO
 
 
@@ -1189,9 +1454,9 @@ Config = {
 
         ['Vanilla'] = copyTable(washing_itens),
 
-        
         ['Bahamas'] = copyTable(washing_itens),
 
+        ['CatCafe'] = copyTable(food_itens),
 
     }, -- final do storages
 

@@ -133,8 +133,8 @@ RegisterNUICallback('startCrafting', function(data,cb)
         else
             segundos = segundos + data.item.timer
         end
-        ExecuteCommand('e mexer')
-        FreezeEntityPosition(PlayerPedId(), true)
+        -- ExecuteCommand('e mexer')
+        -- FreezeEntityPosition(PlayerPedId(), true)
     end
     cb(request)
 end)

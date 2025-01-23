@@ -243,15 +243,21 @@ end
 src.producedItem = function(data, type)
     local source = source
     local user_id = vRP.getUserId(source)
+    local org_name = vRP.getUserOrgName(user_id)
     
     if user_id then
         local info = Config.Tables[type]
         
         if craftingItem[user_id] and craftingItem[user_id][data.name] then
+
+            local current_amount = craftingItem[user_id][data.name].amount
+
             vRP.giveInventoryItem(user_id, data.name, craftingItem[user_id][data.name].amount, true)
-            
+
+       
+            -- exports.flow_inventory:sendItemsToChest(data.name,current_amount,5, org_name, 10000, org_name)
             -- Registra o log do item recebido como presente
-            vRP.sendLog("", "O ID "..user_id.." recebeu o item: "..data.name.." como presente na quantidade de "..craftingItem[user_id][data.name].amount)
+            vRP.sendLog("", "O ID "..user_id.." recebeu o item: "..data.name.." como presente na quantidade de "..current_amount)
             
             craftingItem[user_id][data.name] = nil
         else

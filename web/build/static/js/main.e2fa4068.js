@@ -6791,7 +6791,7 @@
                 };
                 return window.addEventListener("message", e), () => window.removeEventListener("message", e)
             }), []), (0, e.useEffect)((() => {
-                if (!L || o.length > 0) return;
+                // if (!L || o.length > 0) return;
                 const e = e => {
                     let {
                         key: t
