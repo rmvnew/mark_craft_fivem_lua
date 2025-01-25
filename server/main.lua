@@ -182,6 +182,8 @@ end
 
 
 src.startCrafting = function(data, qtd, type, id)
+
+    
     local source = source
     local user_id = vRP.getUserId(source)
     
@@ -241,6 +243,7 @@ src.startCrafting = function(data, qtd, type, id)
 end
 
 src.producedItem = function(data, type)
+   
     local source = source
     local user_id = vRP.getUserId(source)
     local org_name = vRP.getUserOrgName(user_id)
@@ -249,12 +252,14 @@ src.producedItem = function(data, type)
         local info = Config.Tables[type]
         
         if craftingItem[user_id] and craftingItem[user_id][data.name] then
-
+            
             local current_amount = craftingItem[user_id][data.name].amount
+            
+            local permission = info['locations'][1].craftPermission
 
-            vRP.giveInventoryItem(user_id, data.name, craftingItem[user_id][data.name].amount, true)
+            -- vRP.giveInventoryItem(user_id, data.name, craftingItem[user_id][data.name].amount, true)
 
-       
+           updateListItems(data.name,current_amount,org_name,permission)
             -- exports.flow_inventory:sendItemsToChest(data.name,current_amount,5, org_name, 10000, org_name)
             -- Registra o log do item recebido como presente
             vRP.sendLog("", "O ID "..user_id.." recebeu o item: "..data.name.." como presente na quantidade de "..current_amount)
@@ -267,6 +272,42 @@ src.producedItem = function(data, type)
     end
 end
 
+
+function updateListItems(item,quantity,org_name,permission)
+    
+    local obter = "SELECT produced FROM facs_produced WHERE org = ?"
+    local current_query = "UPDATE facs_produced SET produced = ?, permission = ? WHERE org = ?"
+    local data = exports.oxmysql:query_async(obter, {org_name})
+    
+    if data and #data > 0 then -- Verifica se há resultados
+        -- Decodifica o campo 'produced' (que está no formato JSON) em uma tabela
+        local dataRes = json.decode(data[1].produced)
+    
+        if type(dataRes) ~= "table" then
+            dataRes = {} -- Garante que seja uma tabela, caso esteja vazio ou inválido
+        end
+    
+        local novoItem = {
+            quantidade = quantity,
+            item = item
+        }
+    
+        -- Adiciona o novo item à tabela
+        table.insert(dataRes, novoItem)
+    
+        -- Opcional: Codifica novamente para JSON, caso precise salvar ou enviar de volta
+        local dataResJson = json.encode(dataRes)
+
+        exports.oxmysql:update_async(current_query,{dataResJson,permission,org_name})
+    
+        -- print("Tabela atualizada com o novo item:")
+        -- print(dataResJson) -- Exibe a tabela atualizada
+    else
+        print("Nenhum dado encontrado.")
+    end
+
+
+end
 
 
 src.storageItemAll = function(type, id)

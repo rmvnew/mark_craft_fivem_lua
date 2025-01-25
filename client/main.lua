@@ -140,7 +140,7 @@ RegisterNUICallback('startCrafting', function(data,cb)
 end)
 
 RegisterNUICallback('producedItem', function(data,cb)
-    local request = vSERVER.producedItem(data.item)
+    local request = vSERVER.producedItem(data.item,type)
     cb(request)
 end)
 

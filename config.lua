@@ -1190,11 +1190,11 @@ Config = {
                 {
                     item = 'cafe_com_leite', -- SPAWN DO ITEM
                     amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
-                    itemTime = 10, -- 30 segundo(s) para a maquina concluir o craft.
+                    itemTime = 15, -- 30 segundo(s) para a maquina concluir o craft.
                     requires = {
                         -- ITENS NECESSARIOS PARA O CRAFT
-                        { item = "leite_de_gado" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
-                        { item = "graos_de_cafe" , amount = 25 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "leite_de_gado" , amount = 35 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
+                        { item = "graos_de_cafe" , amount = 35 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
                     }
                 },
                 {
