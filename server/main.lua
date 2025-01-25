@@ -263,7 +263,9 @@ src.producedItem = function(data, type)
             -- exports.flow_inventory:sendItemsToChest(data.name,current_amount,5, org_name, 10000, org_name)
             -- Registra o log do item recebido como presente
             vRP.sendLog("", "O ID "..user_id.." recebeu o item: "..data.name.." como presente na quantidade de "..current_amount)
-            
+            TriggerClientEvent("Notify",source,"sucesso","Produção concluida do item "..data.name)
+            TriggerClientEvent("m_craft_v2:alertSuccess",source)
+
             craftingItem[user_id][data.name] = nil
         else
             TriggerClientEvent('Notify', source, 'negado', "Você não está craftando esse item, então não é possível recebê-lo.", 5000)

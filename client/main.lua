@@ -178,66 +178,12 @@ CreateThread(function()
 end)
 
 
+RegisterNetEvent("m_craft_v2:alertSuccess")
+AddEventHandler("m_craft_v2:alertSuccess",function(source)
 
--- RegisterNUICallback('startCollect', function(data,cb)
---     if not in_rota then
--- 		in_rota = true
--- 		itemNumRoute = 1
--- 		itemRoute = data.route
---         direction = data.type
---         textName = 'coleta'
--- 		-- exports["lotus_hud"]:setMinimapActive(true)
+    PlaySoundFrontend(-1, "PICK_UP", "HUD_FRONTEND_DEFAULT_SOUNDSET", true)
 
--- 		CriandoBlip(itemNumRoute,direction)
---         cb(true)
--- 		async(function()
--- 			while in_rota do
--- 				local time = 1000
--- 				local ped = PlayerPedId()
--- 				local pedCoords = GetEntityCoords(ped)
-
--- 					if data.type == "norte" then
--- 						routeIndexed = Config.Locations['NORTE']
--- 						indexedCoords = Config.Locations['NORTE'][parseInt(itemNumRoute)]
--- 						distance = #(pedCoords - vec3(indexedCoords.x, indexedCoords.y, indexedCoords.z ))
--- 					elseif data.type == "sul" then
--- 						routeIndexed = Config.Locations['SUL']
--- 						indexedCoords = Config.Locations['SUL'][parseInt(itemNumRoute)]
--- 						distance = #(pedCoords - vec3(indexedCoords.x, indexedCoords.y, indexedCoords.z ))
--- 					end
--- 					if distance <= 150.0 then
---                         time = 5
-
---                         local z_coords = indexedCoords.z + 1
-
--- 						DrawMarker(22,indexedCoords.x, indexedCoords.y, z_coords,0,0,0,0,180.0,130.0, 4.5,4.5,1.2 , 0, 255, 55,180 ,1,0,0,1)
-
--- 						if distance <= 4.0 then
--- 							-- if IsControlJustReleased(1, 51) and delay <= 0 and not IsPedInAnyVehicle(PlayerPedId()) then 
--- 								delay = 5
-
--- 								if vSERVER.giveItem(itemRoute) then
--- 									-- vRP._playAnim(false,{{"pickup_object","pickup_low"}},false)
--- 									itemNumRoute = itemNumRoute + 1
--- 									if itemNumRoute > #routeIndexed then
--- 										itemNumRoute = 1
--- 									end
--- 									RemoveBlip(blips)
--- 									CriandoBlip(itemNumRoute, direction)
--- 								end
--- 							-- end
--- 						end
--- 					end
--- 				-- end
-
--- 				Citizen.Wait(time)
--- 			end
--- 		end)
--- 	end
--- end)
-
-
--- teste
+end)
 
 
 RegisterNUICallback('startCollect', function(data, cb)
