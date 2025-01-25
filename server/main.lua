@@ -255,18 +255,25 @@ src.producedItem = function(data, type)
             
             local current_amount = craftingItem[user_id][data.name].amount
             
-            local permission = info['locations'][1].craftPermission
+            -- local permission = info['locations'][1].craftPermission
+
+            for _,infos in pairs(info['locations']) do
+
+                if(infos.name == org_name) then
+                    
+                    updateListItems(data.name,current_amount,org_name,infos.craftPermission)
+                     -- exports.flow_inventory:sendItemsToChest(data.name,current_amount,5, org_name, 10000, org_name)
+                     -- Registra o log do item recebido como presente
+                     vRP.sendLog("", "O ID "..user_id.." recebeu o item: "..data.name.." como presente na quantidade de "..current_amount)
+                     TriggerClientEvent("Notify",source,"sucesso","Produção concluida do item "..data.name)
+                     TriggerClientEvent("m_craft_v2:alertSuccess",source)
+         
+                     craftingItem[user_id][data.name] = nil
+                end
+            end
 
             -- vRP.giveInventoryItem(user_id, data.name, craftingItem[user_id][data.name].amount, true)
 
-           updateListItems(data.name,current_amount,org_name,permission)
-            -- exports.flow_inventory:sendItemsToChest(data.name,current_amount,5, org_name, 10000, org_name)
-            -- Registra o log do item recebido como presente
-            vRP.sendLog("", "O ID "..user_id.." recebeu o item: "..data.name.." como presente na quantidade de "..current_amount)
-            TriggerClientEvent("Notify",source,"sucesso","Produção concluida do item "..data.name)
-            TriggerClientEvent("m_craft_v2:alertSuccess",source)
-
-            craftingItem[user_id][data.name] = nil
         else
             TriggerClientEvent('Notify', source, 'negado', "Você não está craftando esse item, então não é possível recebê-lo.", 5000)
             return false
