@@ -162,17 +162,14 @@ end
 
 vRP.prepare('vRP/getUserOrgByUserId', [[
   SELECT org
-  FROM flow_orgs
-  WHERE JSON_VALUE(membros, CONCAT('$.', @user_id, '.nome')) IS NOT NULL;
+  FROM dani_orgs
+  WHERE JSON_VALUE(membros, CONCAT('$.', @user_id, '.groupPrefix')) IS NOT NULL;
 ]])
 
 
 function vRP.getUserOrgName(user_id)
-    
     local rows = vRP.query('vRP/getUserOrgByUserId', { user_id = user_id })
-   
     if #rows > 0 then
-       
         return rows[1].org or "Sem Organização"
     end
     return "Sem Organização"
@@ -243,7 +240,6 @@ src.startCrafting = function(data, qtd, type, id)
 end
 
 src.producedItem = function(data, type)
-   
     local source = source
     local user_id = vRP.getUserId(source)
     local org_name = vRP.getUserOrgName(user_id)
@@ -256,10 +252,14 @@ src.producedItem = function(data, type)
             local current_amount = craftingItem[user_id][data.name].amount
             
             -- local permission = info['locations'][1].craftPermission
-
+            
             for _,infos in pairs(info['locations']) do
+                
+                print("Name 1: ",infos.name)
+                print("Name 2: ",org_name)
 
                 if(infos.name == org_name) then
+                    
                     
                     updateListItems(data.name,current_amount,org_name,infos.craftPermission)
                      -- exports.flow_inventory:sendItemsToChest(data.name,current_amount,5, org_name, 10000, org_name)

@@ -14,7 +14,7 @@ local weapon_items = {
     ['pecadearma'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
     ['gatilho'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
     ['molas'] = 9999999,-- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
-    ['placa-metal'] = 9999999 -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
+    ['placa-metal'] = 9999999, -- ITEM / QUANTIDADE MAXIMA QUE CONSEGUE GUARDAR
 }
 
 local  munition_items = {
@@ -162,37 +162,7 @@ Config = {
                     --         {item = 'cocaina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
                     --         {item = 'maconha', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
                     --     }
-                    -- },
-                    -- {
-                    --     dangerRoute = {
-                    --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    --         percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    --     },
-                    --     itensList = {
-                    --         {item = 'maconha', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --         {item = 'metanfetamina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --     }
-                    -- },
-                    -- {
-                    --     dangerRoute = {
-                    --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    --         percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    --     },
-                    --     itensList = {
-                    --         {item = 'metanfetamina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --         {item = 'lsd', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --     }
-                    -- },
-                    -- {
-                    --     dangerRoute = {
-                    --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    --         percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    --     },
-                    --     itensList = {
-                    --         {item = 'lsd', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --         {item = 'cocaina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                     --   }
-                  --  }
+                    -- }
                 }
             },
             locations = {
@@ -200,14 +170,14 @@ Config = {
                 {
                     -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
                     name = 'Mafia',
-                    coords = vec3(-1870.42, 2061.71, 135.44), -- COORDENADAS DA BANCADA
+                    coords = vec3(412.21,3.96,84.92), -- COORDENADAS DA BANCADA
                     requireStorage = {
                         -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
                         active = true,
                         name = 'Mafia'
                     },
-                    tablePermission = 'mafia.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
-                    craftPermission = 'lidermafia.permissao', -- PERMISSAO PARA CRAFTAR ITEM
+                    tablePermission = 'perm.mafia', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'perm.lidermafia', -- PERMISSAO PARA CRAFTAR ITEM
                     drawMarker = function(coords, dist)
                         if dist <= 5.0 then
                             DrawText3Ds(
@@ -242,10 +212,58 @@ Config = {
                         end
                     end -- BLIP DO CHAO
                 },
+                
+                {
+                    -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
+                    name = 'Yakuza',
+                    coords = vec3(-179.03,303.37,100.91), -- COORDENADAS DA BANCADA
+                    requireStorage = {
+                        -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
+                        active = true,
+                        name = 'Yakuza'
+                    },
+                    tablePermission = 'perm.yakuza', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'perm.lideryakuza', -- PERMISSAO PARA CRAFTAR ITEM
+                    drawMarker = function(coords, dist)
+                        if dist <= 5.0 then
+                            DrawText3Ds(
+                                coords.x,
+                                coords.y,
+                                coords.z + 0.1,
+                                'Pressione ~p~[E]~w~ para acessar a bancada.'
+                            )
+                            DrawMarker(
+                                27,
+                                coords.x,
+                                coords.y,
+                                coords.z - 0.95,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1.5,
+                                1.5,
+                                1.5,
+                                132,
+                                102,
+                                226,
+                                180,
+                                0,
+                                0,
+                                0,
+                                1
+                            )
+                        end
+                    end -- BLIP DO CHAO
+                },
+
+
                 {
                     -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
                     name = 'Verdes',
-                    coords = vec3(1443.89, -765.18, 87.69), -- COORDENADAS DA BANCADA
+                    coords = vec3(1500.64,-808.11,115.15), -- COORDENADAS DA BANCADA
                     requireStorage = {
                         -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
                         active = true,
@@ -368,52 +386,22 @@ Config = {
                     --         {item = 'cocaina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
                     --         {item = 'maconha', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
                     --     }
-                    -- },
-                    -- {
-                    --     dangerRoute = {
-                    --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    --         percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    --     },
-                    --     itensList = {
-                    --         {item = 'maconha', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --         {item = 'metanfetamina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --     }
-                    -- },
-                    -- {
-                    --     dangerRoute = {
-                    --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    --         percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    --     },
-                    --     itensList = {
-                    --         {item = 'metanfetamina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --         {item = 'lsd', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --     }
-                    -- },
-                    -- {
-                    --     dangerRoute = {
-                    --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    --         percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    --     },
-                    --     itensList = {
-                    --         {item = 'lsd', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --         {item = 'cocaina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                     --   }
-                  --  }
+                    -- }
                 }
             },
             locations = {
                 -- LOCALIZACOES DESSAS BANCADAS
                 {
                     -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
-                    name = 'Cartel',
-                    coords = vec3(1405.88, 1137.92, 109.75), -- COORDENADAS DA BANCADA
+                    name = 'Anonymous',
+                    coords = vec3(763.93,-1905.08,29.45), -- COORDENADAS DA BANCADA
                     requireStorage = {
                         -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
                         active = true,
-                        name = 'Cartel'
+                        name = 'Anonymous'
                     },
-                    tablePermission = 'Cartel.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
-                    craftPermission = 'liderCartel.permissao', -- PERMISSAO PARA CRAFTAR ITEM
+                    tablePermission = 'perm.anonymous', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'perm.lideranonymous', -- PERMISSAO PARA CRAFTAR ITEM
                     drawMarker = function(coords, dist)
                         if dist <= 5.0 then
                             DrawText3Ds(
@@ -451,15 +439,107 @@ Config = {
 
                 {
                     -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
-                    name = 'Medelin',
-                    coords = vec3(2431.97, 4967.67, 42.35), -- COORDENADAS DA BANCADA
+                    name = 'Bratva',
+                    coords = vec3(-2679.52,1326.95,144.25), -- COORDENADAS DA BANCADA
                     requireStorage = {
                         -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
                         active = true,
-                        name = 'Medelin'
+                        name = 'Bratva'
                     },
-                    tablePermission = 'Medelin.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
-                    craftPermission = 'liderMedelin.permissao', -- PERMISSAO PARA CRAFTAR ITEM
+                    tablePermission = 'perm.bratva', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'perm.liderbratva', -- PERMISSAO PARA CRAFTAR ITEM
+                    drawMarker = function(coords, dist)
+                        if dist <= 5.0 then
+                            DrawText3Ds(
+                                coords.x,
+                                coords.y,
+                                coords.z + 0.1,
+                                'Pressione ~p~[E]~w~ para acessar a bancada.'
+                            )
+                            DrawMarker(
+                                27,
+                                coords.x,
+                                coords.y,
+                                coords.z - 0.95,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1.5,
+                                1.5,
+                                1.5,
+                                132,
+                                102,
+                                226,
+                                180,
+                                0,
+                                0,
+                                0,
+                                1
+                            )
+                        end
+                    end -- BLIP DO CHAO
+                },
+                
+                {
+                    -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
+                    name = 'Cartel',
+                    coords = vec3(1405.88, 1137.92, 109.75), -- COORDENADAS DA BANCADA
+                    requireStorage = {
+                        -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
+                        active = true,
+                        name = 'Cartel'
+                    },
+                    tablePermission = 'perm.cartel', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'perm.lidercartel', -- PERMISSAO PARA CRAFTAR ITEM
+                    drawMarker = function(coords, dist)
+                        if dist <= 5.0 then
+                            DrawText3Ds(
+                                coords.x,
+                                coords.y,
+                                coords.z + 0.1,
+                                'Pressione ~p~[E]~w~ para acessar a bancada.'
+                            )
+                            DrawMarker(
+                                27,
+                                coords.x,
+                                coords.y,
+                                coords.z - 0.95,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                0,
+                                1.5,
+                                1.5,
+                                1.5,
+                                132,
+                                102,
+                                226,
+                                180,
+                                0,
+                                0,
+                                0,
+                                1
+                            )
+                        end
+                    end -- BLIP DO CHAO
+                },
+
+                {
+                    -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
+                    name = 'Triade',
+                    coords = vec3(-867.25,-1458.22,7.53), -- COORDENADAS DA BANCADA
+                    requireStorage = {
+                        -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
+                        active = true,
+                        name = 'Triade'
+                    },
+                    tablePermission = 'perm.triade', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'perm.lidertriade', -- PERMISSAO PARA CRAFTAR ITEM
                     drawMarker = function(coords, dist)
                         if dist <= 5.0 then
                             DrawText3Ds(
@@ -559,8 +639,8 @@ Config = {
                         active = true,
                         name = 'Bennys'
                     },
-                    tablePermission = 'Bennys.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
-                    craftPermission = 'liderBennys.permissao', -- PERMISSAO PARA CRAFTAR ITEM
+                    tablePermission = 'perm.bennys', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'perm.liderbennys', -- PERMISSAO PARA CRAFTAR ITEM
                     drawMarker = function(coords, dist)
                         if dist <= 5.0 then
                             DrawText3Ds(
@@ -598,15 +678,15 @@ Config = {
 
                 {
                     -- POSSIVEL ADICIONAR VARIAS LOCALIZACOES E VARIAS ORGANIZACOES DIFERENTE
-                    name = 'Franca',
-                    coords = vec3(-2364.6, 1749.45, 212.14), -- COORDENADAS DA BANCADA
+                    name = 'Furious',
+                    coords = vec3(978.66,-91.89,74.85), -- COORDENADAS DA BANCADA
                     requireStorage = {
                         -- SE VAI PUXAR OS ITENS DO ARMAZEM NA HORA DE FABRICAR ( Caso for true configurar na parte Storages )
                         active = true,
-                        name = 'Franca'
+                        name = 'Furious'
                     },
-                    tablePermission = 'Franca.permissao', -- PERMISSAO PARA ACESSAR A BANCADA
-                    craftPermission = 'liderFranca.permissao', -- PERMISSAO PARA CRAFTAR ITEM
+                    tablePermission = 'perm.furious', -- PERMISSAO PARA ACESSAR A BANCADA
+                    craftPermission = 'perm.liderfurious', -- PERMISSAO PARA CRAFTAR ITEM
                     drawMarker = function(coords, dist)
                         if dist <= 5.0 then
                             DrawText3Ds(
@@ -945,7 +1025,7 @@ Config = {
                 {
                     item = 'capuz', -- SPAWN DO ITEM
                     amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
-                    itemTime = 25, -- 30 segundo(s) para a maquina concluir o craft.
+                    itemTime = 5, -- 30 segundo(s) para a maquina concluir o craft.
                     requires = {
                         -- ITENS NECESSARIOS PARA O CRAFT
                         { item = "tecido" , amount = 30 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
@@ -954,7 +1034,7 @@ Config = {
                 {
                     item = 'algemas', -- SPAWN DO ITEM
                     amount = 1, -- Quantidade de item que vai receber por unidade selecionada.
-                    itemTime = 25, -- 30 segundo(s) para a maquina concluir o craft.
+                    itemTime = 5, -- 30 segundo(s) para a maquina concluir o craft.
                     requires = {
                         -- ITENS NECESSARIOS PARA O CRAFT
                         { item = "placa-metal" , amount = 35 }, -- ITEM / QUANTIDADE ( POR UNIDADE )
@@ -1047,36 +1127,7 @@ Config = {
                             {item = 'maconha', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
                         }
                     },
-                    -- {
-                    --     dangerRoute = {
-                    --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    --         percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    --     },
-                    --     itensList = {
-                    --         {item = 'maconha', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --         {item = 'metanfetamina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --     }
-                    -- },
-                    -- {
-                    --     dangerRoute = {
-                    --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    --         percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    --     },
-                    --     itensList = {
-                    --         {item = 'metanfetamina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --         {item = 'lsd', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --     }
-                    -- },
-                    -- {
-                    --     dangerRoute = {
-                    --         status = true, -- Rota Perigosa ( CHANCE DE CHAMAR A POLICIA )
-                    --         percentualPolice = 50 -- 3% De chamar A Policia ( APENAS SE O DangerRoute For ativo )
-                    --     },
-                    --     itensList = {
-                    --         {item = 'lsd', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260}, -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                    --         {item = 'cocaina', minAmount = 5, maxAmount = 10, type = 'ilegal', payment = 1260} -- ( TYPE legal = dinheiro normal, ilegal = dinheiro sujo) ( payment valor por unidade )
-                        --   }
-                    --  }
+                    -- 
                 }
             },
             locations = {
